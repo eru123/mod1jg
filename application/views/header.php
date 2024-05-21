@@ -104,7 +104,7 @@ $crossenv = require(BASEPATH . '/../crossenv.php');
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a class="btn btn-login" href="<?= rtrim($crossenv['base_url'], '/') . '/inventory-php/index.php' ?>">
+                    <a class="btn btn-login" href="<?= site_url('login') ?>">
                         Login/Register
                     </a>
                 </div>

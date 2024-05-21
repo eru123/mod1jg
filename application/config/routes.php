@@ -55,3 +55,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['RoomCon'] = 'RoomCon/index';
 $route['EventCon'] = 'EventCon/index';
+
+$route['login'] = 'InventoryCon/login';
+$route['logout'] = 'InventoryCon/logout';
+$route['register'] = 'InventoryCon/register';
+$route['forgot_password'] = 'InventoryCon/forgot_password';
+$route['resend_otp'] = 'InventoryCon/resend_otp';

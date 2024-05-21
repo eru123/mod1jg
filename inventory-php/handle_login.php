@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['otp'])) {
                 $_SESSION['email'] = $row['email'];
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['profile'] = $row['profile'];
-                $_SESSION['account_no'] = $row['account_no'] ?? null;
+                $_SESSION['account_no'] = @$row['account_no'];
                 $_SESSION['name'] = $row['firstname'] . ' ' . $row['middle_initial'] . '. ' . $row['lastname'];
             }
         }

@@ -52,13 +52,6 @@ class Welcome extends CI_Controller {
         $this->load->helper('url'); // Load URL Helper
         $this->load->view('availevent');
     }
-
-
-
-	
-
-
-
     // Add more methods for other pages as needed
 }
 ?>

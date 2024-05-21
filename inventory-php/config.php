@@ -1,12 +1,15 @@
-
 <?php
+$crossenv = require __DIR__ . '/../crossenv.php';
+
 session_start();
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$database = 'booking_and_reservation_db';
+$host = isset($crossenv['db']['hostname']) ? $crossenv['db']['hostname'] : 'localhost';
+$user = isset($crossenv['db']['username']) ? $crossenv['db']['username'] : 'root';
+$password = isset($crossenv['db']['password']) ? $crossenv['db']['password'] : '';
+$database = isset($crossenv['db']['database']) ? $crossenv['db']['database'] : 'booking_and_reservation_db';
+
 $conn = new mysqli($host, $user, $password);
-if ($conn->connect_error) die('Database connection failed: ' . $conn->connect_error);
+if ($conn->connect_error)
+    die('Database connection failed: ' . $conn->connect_error);
 $query = "CREATE DATABASE IF NOT EXISTS $database";
 if (!$conn->query($query)) {
     echo "Error creating database: " . $conn->error;
@@ -37,8 +40,6 @@ $queryCreateTable = "CREATE TABLE IF NOT EXISTS accounts (
 if (!$conn->query($queryCreateTable)) {
     die("Error creating table: " . $conn->error);
 }
-
-
 
 $queryCreateTable = "CREATE TABLE IF NOT EXISTS room_inventory (
     id INT AUTO_INCREMENT PRIMARY KEY,

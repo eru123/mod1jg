@@ -7,19 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="<?= base_url('inventory-php/src/bootstrap.min.css') ?>" />
-    <script src="./src/jquery.min.js"></script>
-    <script src="./src/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('inventory-php/src/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('inventory-php/src/sweetalert2/sweetalert2.all.min.js') ?>"></script>
     <!-- Favicon -->
-    <link rel="icon" href="./src/img/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url('inventory-php/src/img/favicon.ico') ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?= base_url('inventory-php/src/img/favicon.ico') ?>" type="image/x-icon" />
     <meta name="theme-color" content="#ffffff">
     <meta name="background-color" content="#ffffff">
     <meta name="display" content="standalone">
-    <link rel="icon" type="image/png" sizes="192x192" href="./src/img/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="./src/img/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="<?= base_url('inventory-php/src/img/android-chrome-192x192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512"
+        href="<?= base_url('inventory-php/src/img/android-chrome-512x512.png') ?>">
 
     <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <meta name="msapplication-TileColor" content="#ffffff" />
 
@@ -29,7 +33,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 
     <!-- google icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
     <!-- custom styles -->
     <style>
@@ -88,30 +93,30 @@
 </head>
 
 <body class="">
-
-    <?php
-    require_once './handle_login.php';
-    require_once './loading_banner.php';
-    ?>
-    <div style="min-height: 100vh;" class="w-full d-flex align-items-center justify-content-center flex-column px-3 bg-light">
+    <div style="min-height: 100vh;"
+        class="w-full d-flex align-items-center justify-content-center flex-column px-3 bg-light">
         <?php if (!isset($_SESSION['validate_otp'])) { ?>
             <div class="shadow">
                 <form action="" method="post" class="form p-5 col-12 col-lg-4 bg-white rounded">
-                    <a href="<?= base_url() ?>"><img class="d-block mx-auto" style="width: 80%; height: 100px; object-fit: cover" src="assets/img/logo.jpg"></a>
+                    <a href="<?= base_url() ?>"><img class="d-block mx-auto"
+                            style="width: 80%; height: 100px; object-fit: cover" src="<?=base_url('inventory-php/assets/img/logo.jpg')?>" alt="Logo"></a>
                     <div class="container my-3 mt-0">
                         <label class="form-label" for="email">Email</label>
-                        <input autofocus placeholder="Email" value="<?php echo $_POST['email'] ?? null ?>" required type="text" class="form-control form-control-sm input" id="email" name="email">
+                        <input autofocus placeholder="Email" value="<?php echo @$_POST['email'] ?>" required type="text"
+                            class="form-control form-control-sm input" id="email" name="email">
                     </div>
                     <div class="container my-3">
                         <label class="form-label" for="password">Password</label>
                         <div class="d-block position-relative">
-                            <input placeholder="Password" value="<?php echo $_POST['password'] ?? null ?>" required type="password" class="form-control form-control-sm input" id="password" name="password">
-                            <i class="fas fa-eye text-dark" id="fa-eye" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
+                            <input placeholder="Password" value="<?php echo @$_POST['password'] ?>" required type="password"
+                                class="form-control form-control-sm input" id="password" name="password">
+                            <i class="fas fa-eye text-dark" id="fa-eye"
+                                style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                         </div>
                         <script>
                             // toggle show/hide password function
-                            $(function() {
-                                $('#fa-eye').click(function() {
+                            $(function () {
+                                $('#fa-eye').click(function () {
                                     $(this).toggleClass('fa-eye-slash').toggleClass('fa-eye');
                                     $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
                                 })
@@ -126,13 +131,15 @@
                                 Remember me
                             </label>
                         </div>
-                        <a href="./forgot_password.php" class="text-dark fw-bold" style="font-size: 13px;">Forgot password?</a>
+                        <a href="<?= site_url('forgot_password') ?>" class="text-dark fw-bold" style="font-size: 13px;">Forgot
+                            password?</a>
                     </div>
 
                     <div class="container text-center d-grid mt-1">
                         <button type="submit" class="btn mb-3 btn-sm btn-success btn-block">Login</button>
                     </div>
-                    <p style="font-size: 14px" class="text-center">Don't have an account? <a href="register.php" class="nav-link btn d-inline text-dark fw-bold">Create an Account</a></p>
+                    <p style="font-size: 14px" class="text-center">Don't have an account? <a href="<?= site_url('register') ?>"
+                            class="nav-link btn d-inline text-dark fw-bold">Create an Account</a></p>
                 </form>
             </div>
         <?php } else { ?>
@@ -146,7 +153,7 @@
                             title: "Opsss!",
                             text: "verification code expired!",
                             icon: "error",
-                            onClose: function() {
+                            onClose: function () {
                                 location.href = "./clear_session.php";
                             }
                         });
@@ -160,22 +167,27 @@
             <form action="" method="post" class="form p-5 col-12 col-lg-4 shadow" style="background: #fff; width: 500px;">
                 <a href="./logout.php"><i class="fas fa-arrow-left fs-5"></i></a>
                 <h1 class="text-center fw-bolder fs-5 my-3">Enter Verification Code</h1>
-                <h3 class="text-center fw-semibold fs-6 p-3 text-muted">We have sent the OTP to your given email, please check it.
+                <h3 class="text-center fw-semibold fs-6 p-3 text-muted">We have sent the OTP to your given email, please
+                    check it.
                 </h3>
                 <p id="time" class=" text-muted px-3 text-center" style="font-size: 14px;"></p>
                 <div class="container my-3">
-                    <input placeholder="Enter code" value="<?php echo $_POST['otp'] ?? null ?>" required type="number" class="form-control form-control-sm input" id="otp" name="otp">
+                    <input placeholder="Enter code" value="<?php echo @$_POST['otp'] ?>" required type="number"
+                        class="form-control form-control-sm input" id="otp" name="otp">
                 </div>
                 <div class="container my-3 text-center">
-                    <button type="submit" class="btn btn-sm btn-primary" style="height: 40px; width: 200px;">Submit</button><br>
-                    <p class="mt-3 fs-6">Didn't receive OTP? <a href="./resend_OTP.php" class="text-decoration-none">Resend code</a></p>
+                    <button type="submit" class="btn btn-sm btn-primary"
+                        style="height: 40px; width: 200px;">Submit</button><br>
+                    <p class="mt-3 fs-6">Didn't receive OTP? <a href="<?= site_url('resend_otp') ?>"
+                            class="text-decoration-none">Resend
+                            code</a></p>
                 </div>
             </form>
 
         <?php } ?>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -190,23 +202,23 @@
 
             <?php
             if (isset($err_msg)) {
-            ?>
+                ?>
                 Toast.fire({
                     icon: "error",
                     title: "<?php echo $err_msg ?>"
                 });
-            <?php
+                <?php
             }
             ?>
 
             <?php
             if (isset($success_msg)) {
-            ?>
+                ?>
                 Toast.fire({
                     icon: "success",
                     title: "<?php echo $success_msg ?>"
                 });
-            <?php
+                <?php
             }
             ?>
         })

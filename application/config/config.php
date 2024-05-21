@@ -2,6 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 $crossenv = require(__DIR__ . '/../../crossenv.php');
 
+$config['crossenv'] = $crossenv;
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
