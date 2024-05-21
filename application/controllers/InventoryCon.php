@@ -377,7 +377,7 @@ class InventoryCon extends CI_Controller
             }
         }
 
-        $this->load->view('inventory/forgot_password', compact('err_msg', 'success_msg', 'email'));
+        $this->load->view('inventory/forgot_passwordx', compact('err_msg', 'success_msg', 'email'));
     }
 
     public function logout()
