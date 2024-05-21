@@ -1,22 +1,3 @@
-<?php
-require_once '../config.php';
-require_once '../global.php';
-
-if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'user') {
-        header('location: ../user');
-    }
-} else {
-    header('location: ../index.php');
-}
-
-$sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-$profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
-$email = $row['email'] ?? null;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +6,7 @@ $email = $row['email'] ?? null;
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rooms and Venues Management</title>
-    <link rel="stylesheet" href="../src/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?= base_url('inventory-php/src/bootstrap.min.css') ?>" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -36,9 +17,9 @@ $email = $row['email'] ?? null;
 
     <!-- google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="../src/style.css">
-    <script src="../src/jquery.min.js"></script>
-    <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="<?= base_url('inventory-php/src/style.css') ?>">
+    <script src="<?= base_url('inventory-php/src/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('inventory-php/src/sweetalert2/sweetalert2.all.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
 
@@ -115,7 +96,7 @@ $email = $row['email'] ?? null;
 </head>
 
 <body>
-    <?php require_once '../loading_banner.php' ?>
+    <?php require_once __DIR__ . '/../loading_banner.php' ?>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
@@ -133,15 +114,15 @@ $email = $row['email'] ?? null;
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
 
                         <ul class="navbar-nav flex-column justify-content-start">
-                            <img src="../assets/img/logo.jpg" width="100%">
+                            <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" width="100%">
                             <li class="nav-item my-1">
-                                <a href="./index.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="<?= site_url('admin') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">Dashboard</span>
                                     Dashboard
                                 </a>
                             </li>
-                            <li class="nav-item my-1  current-page">
-                                <a href="rooms_and_cottages.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                            <li class="nav-item my-1 current-page">
+                                <a href="<?= site_url('admin/rooms_and_cottages') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">room_preferences</span>
                                     Rooms & Cottages
                                 </a>
@@ -153,7 +134,7 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="./inventory.php" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="<?= site_url('admin/inventory') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">
                                         inventory
                                     </span>
@@ -173,13 +154,11 @@ $email = $row['email'] ?? null;
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="profile.php" class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
+                                <a href="<?= site_url('admin/profile') ?>" class="d-flex align-items-center justify-content-start gap-1 ml-4 fs-6">
                                     <span class="material-symbols-outlined">account_box</span>
                                     My profile
                                 </a>
                             </li>
-
-
                         </ul>
                     </div>
                 </nav>
@@ -192,7 +171,7 @@ $email = $row['email'] ?? null;
         <!-- wrapper  -->
         <!-- ============================================================== -->
         <div class="dashboard-wrapper">
-            <?php require_once './profile_nav.php' ?>
+            <?php require_once __DIR__ . '/profile_nav.php' ?>
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content ">
                     <!-- ============================================================== -->
@@ -260,7 +239,7 @@ $email = $row['email'] ?? null;
                                         <?php
 
                                         $table = 'rooms_and_venues';
-                                        $data = getRows(null, $table);
+                                        $data = $this->inventory->getRows(null, $table);
 
                                         // Pagination parameters
                                         $totalItems = count($data);
@@ -277,7 +256,7 @@ $email = $row['email'] ?? null;
                                             <tr>
                                                 <td><?= $row['id'] ?></td>
                                                 <td>
-                                                    <img width="50px" src="<?= $row['image'] ?>" alt="image">
+                                                    <img width="50px" src="<?= base_url($row['image']) ?>" alt="image">
                                                 </td>
                                                 <td><?= $row['room_venue_type'] ?></td>
                                                 <td><?= $row['max_capacity'] ?></td>
@@ -350,12 +329,13 @@ $email = $row['email'] ?? null;
 
 
                                         $table = 'rooms_and_venues';
-                                        $post = validate_post_data($_POST);
+                                        $post = $this->inventory->validate_post_data($_POST);
                                         $room_venue_type = trim($post['room_venue_type']);
                                         $max_capacity = trim($post['max_capacity']);
                                         $price = trim($post['price']);
                                         $status = trim($post['status']);
 
+                                        $conn = $this->inventory->conn();
                                         $insertQuery = "INSERT INTO $table (image, room_venue_type, max_capacity, price, status) VALUES ('$uploadPath', '$room_venue_type', $max_capacity, $price, '$status')";
                                         $result = mysqli_query($conn, $insertQuery);
                                         if ($result) {
@@ -410,14 +390,12 @@ $email = $row['email'] ?? null;
 
                             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                                $post = validate_post_data($_POST);
+                                $post = $this->inventory->validate_post_data($_POST);
 
                                 $room_venue_type = trim($post['room_venue_type']);
                                 $max_capacity = trim($post['max_capacity']);
                                 $price = trim($post['price']);
                                 $status = trim($post['status']);
-
-
 
                                 $uploadPath = '';
 
@@ -426,12 +404,13 @@ $email = $row['email'] ?? null;
                                     $uploadDir = 'uploads/';
                                     $fileName = uniqid('upload_') . '_' . basename($file['name']);
                                     $uploadPath = $uploadDir . $fileName;
-                                    if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
+                                    $actualPath = FCPATH . $uploadPath;
+                                    if (!move_uploaded_file($file['tmp_name'], $actualPath)) {
                                         $err_msg = 'Error moving the uploaded file.';
                                     }
                                 }
 
-
+                                $conn = $this->inventory->conn();
                                 $checkQuery = "SELECT COUNT(*) AS count FROM $table WHERE id = $id";
                                 $checkResult = mysqli_query($conn, $checkQuery);
                                 $row = mysqli_fetch_assoc($checkResult);
@@ -451,12 +430,11 @@ $email = $row['email'] ?? null;
                                         $err_msg = "Error updating product: " . mysqli_error($conn);
                                     }
                                 } else {
-                                    echo '<script>location.href="./rooms_and_cottages.php"; </script>';
+                                    echo '<script>location.href="' . site_url("admin/rooms_and_cottages") . '"; </script>';
                                 }
                             }
 
-
-                            $row = getRows("id=$id", $table)[0];
+                            $row = $this->inventory->getRows("id=$id", $table)[0];
 
 
 
@@ -490,7 +468,7 @@ $email = $row['email'] ?? null;
                                 </div>
 
                                 <div class="col-12 mt-5 d-flex align-items-center justify-content-end gap-3">
-                                    <a href="./rooms_and_cottages.php" class="btn btn-danger btn-lg px-5 text-white" style="border-radius: 20px;">Cancel</a>
+                                    <a href="<?= site_url("admin/rooms_and_cottages") ?>" class="btn btn-danger btn-lg px-5 text-white" style="border-radius: 20px;">Cancel</a>
                                     <button type="submit" class="btn btn-primary btn-lg px-5 text-white" style="border-radius: 20px;">Save</button>
                                 </div>
                             </form>
@@ -546,7 +524,7 @@ $email = $row['email'] ?? null;
                     icon: "success",
                     title: "<?php echo $success_msg ?>"
                 }).then(() => {
-                    location.href = 'rooms_and_cottages.php';
+                    location.href = "<?= site_url("admin/rooms_and_cottages") ?>";
                 });
             <?php
             }
@@ -566,7 +544,8 @@ $email = $row['email'] ?? null;
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "delete_data.php",
+                        // url: "delete_data.php",
+                        url: "<?= site_url("admin/delete_data") ?>",
                         data: {
                             id,
                             table

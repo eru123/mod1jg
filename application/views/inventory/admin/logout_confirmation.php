@@ -15,7 +15,7 @@ function logoutConfirmation() {
                 'You\'re successfully logged out.',
                 'success'
             ).then(function() {
-                location.href = '../logout.php';
+                location.href = "<?= site_url('logout') ?>";
             })
         }
     });

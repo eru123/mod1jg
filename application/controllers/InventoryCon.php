@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class InventoryCon extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -417,9 +416,9 @@ class InventoryCon extends CI_Controller
                 $sql = "INSERT INTO accounts (email, phone, password, firstname, middle_initial, lastname, address, account_no) VALUES ('$email', '$phone', '$hashPass', '$firstname', '$middle_initial', '$lastname', '$address', '$account_no')";
 
                 if (mysqli_query($conn, $sql)) {
-                    ?>
+?>
                     <script>
-                        $(document).ready(function () {
+                        $(document).ready(function() {
                             Swal.fire({
                                 title: "Thank you for signing up",
                                 text: "Try login",
@@ -434,12 +433,94 @@ class InventoryCon extends CI_Controller
 
                         })
                     </script>
-                    <?php
+<?php
                 } else {
                 }
             }
-
         }
         $this->load->view('inventory/register', compact('err_msg', 'success_msg', 'email', 'phone', 'password', 'confirm_password', 'firstname', 'middle_initial', 'lastname', 'address', 'account_no'));
+    }
+
+    public function admin()
+    {
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'user') {
+                // header('location: ../user');
+                redirect('user');
+            }
+        } else {
+            redirect('login');
+        }
+
+        $conn = $this->inventory->conn();
+        $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        // $profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
+        $email = $row['email'] ?? null;
+        $this->load->view('inventory/admin/index', compact('email'));
+    }
+
+    public function rooms_and_cottages()
+    {
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'user') {
+                // header('location: ../user');
+                redirect('user');
+            }
+        } else {
+            redirect('login');
+        }
+
+        $conn = $this->inventory->conn();
+        $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        // $profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
+        $email = $row['email'] ?? null;
+
+        $this->load->view('inventory/admin/rooms_and_cottages', compact('email'));
+    }
+
+    public function profile()
+    {
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'user') {
+                // header('location: ../user');
+                redirect('user');
+            }
+        } else {
+            redirect('login');
+        }
+
+        $conn = $this->inventory->conn();
+        $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $this->load->view('inventory/admin/profile', compact('row', 'conn'));
+    }
+
+    public function update_profile()
+    {
+        $conn = $this->inventory->conn();
+        if (isset($_FILES['profileImage'])) {
+            $file = $_FILES['profileImage'];
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = 'profile/';
+                $fileName = uniqid('profile_') . '_' . basename($file['name']);
+                $uploadPath = $uploadDir . $fileName;
+                $actualPath = FCPATH . $uploadPath;
+                if (move_uploaded_file($file['tmp_name'], $actualPath)) {
+                    $sql = "UPDATE accounts SET profile = '$uploadPath' WHERE email= '{$_SESSION['email']}'";
+
+                    mysqli_query($conn, $sql);
+                } else {
+                    echo 'Error moving the uploaded file.';
+                }
+            } else {
+                echo 'Error during file upload. Error code: ' . $file['error'];
+            }
+        }
     }
 }

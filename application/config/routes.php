@@ -61,3 +61,10 @@ $route['logout'] = 'InventoryCon/logout';
 $route['register'] = 'InventoryCon/register';
 $route['forgot_password'] = 'InventoryCon/forgot_password';
 $route['resend_otp'] = 'InventoryCon/resend_otp';
+
+$route['admin'] = 'InventoryCon/admin';
+$route['admin/rooms_and_cottages'] = 'InventoryCon/rooms_and_cottages';
+$route['admin/delete_data'] = 'InventoryCon/admin';
+$route['admin/profile'] = 'InventoryCon/profile';
+$route['admin/update_profile'] = 'InventoryCon/update_profile';
+$route['admin/inventory'] = 'InventoryCon/admin';
