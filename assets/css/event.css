@@ -1,0 +1,67 @@
+button.custom-bg-customcolor {
+    background-color: #27AE60;
+    color:white;
+}
+body, h5, p, button {
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font throughout the page */
+}
+button.custom-bg-customcolor:hover {
+    background-color: #1e6a48; /* Darker green on hover */
+    color: white;
+}
+.rate-info {
+    display: none;
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.booking-highlight {
+    font-weight: bold;
+    color: #27AE60;
+}
+
+/* Existing styles */
+
+.features .badge {
+background-color: #f0f0f0; /* Light grey background for better visibility */
+color: #333; /* Dark text for contrast */
+padding: 8px 12px; /* Spacing around text and icon */
+display: inline-flex; /* Aligns the icon with the text */
+align-items: center; /* Centers items vertically */
+gap: 5px; /* Space between icon and text */
+}
+
+.features .badge i, .facilities .badge i {
+font-size: 20px; /* Adjust size as needed */
+color: #27AE60; /* Theme color */
+}
+
+/* Ensure badges have enough space for icons and text */
+.features .badge, .facilities .badge {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+background-color: #f0f0f0;
+color: #333;
+padding: 8px 12px;
+}
+
+/* Modal Customization for better visibility */
+.modal-content {
+    border-radius: 10px; /* Rounded corners for the modal */
+}
+
+.modal-footer button {
+    width: 100%; /* Makes the login button full-width */
+}
+
+.description p {
+    font-size: 0.9rem; /* Adjust font size */
+    line-height: 1.5; /* Improve line spacing */
+}
+
+/* Improve button styling inside modal */
+.modal-footer button {
+    width: 100%; /* Full width button for better mobile experience */
+}

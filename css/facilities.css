@@ -1,0 +1,46 @@
+.facilities-section {
+    padding: 40px 0;
+    overflow: hidden;
+}
+
+.facility-wrapper {
+    display: flex;
+    width: auto;
+    animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); } /* Move the full width of all cards */
+}
+
+.facility-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 0 15px;
+    flex: 0 0 auto;
+    width: 300px;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.facility-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.facility-title, .facility-card p {
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.facility-title {
+    font-size: 1.25rem;
+}
+
+.facility-card p {
+    font-size: 0.9rem;
+    color: #666;
+}

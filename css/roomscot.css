@@ -1,0 +1,19 @@
+.room-cottages-area .room-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.room-cottages-area .room-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.carousel-item img {
+    height: 250px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 200px;
+    }
+}

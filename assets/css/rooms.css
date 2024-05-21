@@ -1,0 +1,152 @@
+/* Ensures that the content is not hidden under a fixed navbar */
+body {
+    padding-top: 80px; /* Adjust this value based on the height of your navbar */
+}
+
+.image-container {
+    width: 100%;
+    height: 50vh;  /* Adjusts to cover half the viewport height */
+    position: relative;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;  /* Ensures the image covers the full container */
+    display: block;  /* Removes bottom space/gap */
+    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;  /* Ensures the overlay covers the full image */
+    height: 100%;  /* Ensures the overlay covers the full image */
+    background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent background for the whole image */
+    display: flex;
+    align-items: center;  /* Centers text vertically */
+    justify-content: center;  /* Centers text horizontally */
+}
+
+.overlay-text {
+    text-align: center;  /* Aligns text */
+    font-size: 1.25rem;  /* Responsive font size */
+    color: white;  /* Ensures text color is white for better visibility */
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* Centers the text exactly */
+    max-width: 90%; /* Ensures text does not extend full width */
+}
+
+@media (max-width: 576px) {
+    .overlay-text {
+        font-size: 1rem;  /* Smaller text for smaller devices */
+    }
+}
+
+
+
+
+
+button.custom-bg-customcolor {
+    background-color: #27AE60;
+    color:white;
+}
+body, h5, p, button {
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font throughout the page */
+}
+button.custom-bg-customcolor:hover {
+    background-color: #1e6a48; /* Darker green on hover */
+    color: white;
+}
+.rate-info {
+    display: none;
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.booking-highlight {
+    font-weight: bold;
+    color: #27AE60;
+}
+
+/* Existing styles */
+
+.features .badge {
+background-color: #f0f0f0; /* Light grey background for better visibility */
+color: #333; /* Dark text for contrast */
+padding: 8px 12px; /* Spacing around text and icon */
+display: inline-flex; /* Aligns the icon with the text */
+align-items: center; /* Centers items vertically */
+gap: 5px; /* Space between icon and text */
+}
+
+.features .badge i, .facilities .badge i {
+font-size: 20px; /* Adjust size as needed */
+color: #27AE60; /* Theme color */
+}
+
+/* Ensure badges have enough space for icons and text */
+.features .badge, .facilities .badge {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+background-color: #f0f0f0;
+color: #333;
+padding: 8px 12px;
+}
+
+/* Modal Customization for better visibility */
+.modal-content {
+    border-radius: 10px; /* Rounded corners for the modal */
+}
+
+.modal-footer button {
+    width: 100%; /* Makes the login button full-width */
+}
+
+.description p {
+    font-size: 0.9rem; /* Adjust font size */
+    line-height: 1.5; /* Improve line spacing */
+}
+
+/* Improve button styling inside modal */
+.modal-footer button {
+    width: 100%; /* Full width button for better mobile experience */
+}
+
+.description p {
+    font-size: 1rem; /* Adjust font size for better readability */
+    line-height: 1.6; /* Increase line spacing */
+}
+
+@media (max-width: 768px) {
+    .img-banner {
+        height: 200px; /* Smaller height for mobile devices */
+    }
+
+    .position-absolute p {
+        font-size: 1rem; /* Smaller font size for mobile devices */
+    }
+}
+
+/* Modal Customization for better visibility */
+.modal-content {
+    border-radius: 10px; /* Rounded corners for the modal */
+}
+
+.modal-footer button {
+    width: 100%; /* Makes the login button full-width */
+}
+
+.description p {
+    font-size: 0.9rem; /* Adjust font size */
+    line-height: 1.5; /* Improve line spacing */
+}
+
+/* Improve button styling inside modal */
+.modal-footer button {
+    width: 100%; /* Full width button for better mobile experience */
+}
