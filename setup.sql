@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `room_inventory` (
   `product_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `product_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `room` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+	`condition` VARCHAR(255) NULL DEFAULT NULL,
   `available` int DEFAULT NULL,
   `stock_out` int DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

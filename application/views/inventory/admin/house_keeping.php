@@ -109,8 +109,8 @@
                             <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" width="100%">
                             <li class="nav-item my-1">
                                 <a href="<?= site_url('admin') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">Dashboard</span>
-                                    Dashboard
+                                    <span class="material-symbols-outlined">Reviews</span>
+                                    Reviews
                                 </a>
                             </li>
                             <li class="nav-item my-1">
@@ -191,10 +191,10 @@
                             foreach ($inventory as $inner_row) {
                                 echo '<tr>';
                                 echo '<td>' . $inner_row['id'] . '</td>';
-                                echo '<td><img src="' . $inner_row['product_image'] . '" width="70px"></td>';
+                                echo '<td><img src="' . base_url($inner_row['product_image']) . '" width="70px"></td>';
                                 echo '<td>' . $inner_row['product_name'] . '</td>';
                                 // echo '<td>'. $inner_row['available']. '</td>';
-                                echo '<td>Well-condition</td>';
+                                echo '<td>' . $inner_row['condition'] . '</td>';
                                 echo '<td>
                                     <select>
                                         <option selected disabled class="d-none">-- select one --</option>

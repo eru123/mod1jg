@@ -69,3 +69,7 @@ $route['admin/profile'] = 'InventoryCon/profile';
 $route['admin/update_profile'] = 'InventoryCon/update_profile';
 $route['admin/inventory'] = 'InventoryCon/inventory';
 $route['admin/house_keeping'] = 'InventoryCon/house_keeping';
+
+$route['user'] = 'InventoryCon/user';
+$route['user/profile'] = 'InventoryCon/user_profile';
+$route['user/update_profile'] = 'InventoryCon/user_update_profile';

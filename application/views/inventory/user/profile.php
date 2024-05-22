@@ -1,21 +1,3 @@
-<?php
-require_once '../config.php';
-require_once '../global.php';
-
-if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'admin') {
-        header('location: ../admin');
-    }
-} else {
-    header('location: ../index.php');
-}
-
-$sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,14 +6,14 @@ $row = mysqli_fetch_assoc($result);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
-    <link rel="stylesheet" href="../src/bootstrap.min.css" />
-    <link rel="icon" href="../src/img/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="../src/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="<?= base_url('inventory-php/src/bootstrap.min.css') ?>"  />
+    <link rel="icon" href="<?= base_url('inventory-php/src/img/favicon.ico" type="image/x-icon') ?>"  />
+    <link rel="shortcut icon" href="<?= base_url('inventory-php/src/img/favicon.ico') ?>"  type="image/x-icon" />
     <meta name="theme-color" content="#ffffff">
     <meta name="background-color" content="#ffffff">
     <meta name="display" content="standalone">
-    <link rel="icon" type="image/png" sizes="192x192" href="../src/img/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="../src/img/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('inventory-php/src/img/android-chrome-192x192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('inventory-php/src/img/android-chrome-512x512.png') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Poppins font -->
@@ -41,8 +23,8 @@ $row = mysqli_fetch_assoc($result);
 
     <!-- google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <script src="../src/jquery.min.js"></script>
-    <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('inventory-php/src/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('inventory-php/src/sweetalert2/sweetalert2.all.min.js') ?>"></script>
 
     <style>
         * {
@@ -83,7 +65,7 @@ $row = mysqli_fetch_assoc($result);
         <?php
         // update profile
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $post = validate_post_data($_POST);
+            $post = $this->inventory->validate_post_data($_POST);
             $firstname = $post['firstname'];
             $lastname = $post['lastname'];
             $email = $post['email'];
@@ -99,10 +81,10 @@ $row = mysqli_fetch_assoc($result);
                 $err_msg = "something went wrong please try again";
             }
         }
-        $data = getRows("email = '{$_SESSION['email']}'", "accounts")[0];
+        $data = $this->inventory->getRows("email = '{$_SESSION['email']}'", "accounts")[0];
         ?>
 
-        <img class="col-3 mx-auto d-block shadow rounded" src="<?= $data['profile'] ?? '../assets/img/default_avatar.png'  ?>" alt="Profile">
+        <img class="col-3 mx-auto d-block shadow rounded" src="<?= !empty(@$data['profile']) ? base_url($data['profile']) : base_url('inventory-php/assets/img/default_avatar.png')  ?>" alt="Profile">
         <input type="file" accept="image/*" class="d-none" id="chooseFile">
         <div class="d-flex align-items-center justify-content-center my-3">
             <button type="button" id="profile2" class="btn btn-dark btn-sm" style="height: 40px; font-size: 12px;">Change profile</button>
@@ -113,33 +95,33 @@ $row = mysqli_fetch_assoc($result);
         <div class="d-flex">
             <div class="container my-2">
                 <label class="form-label">First name</label>
-                <input name="firstname" value="<?= $data['firstname'] ?? null ?>" required type="text" class="form-control form-control-sm input" disabled>
+                <input name="firstname" value="<?= @$data['firstname'] ?>" required type="text" class="form-control form-control-sm input" disabled>
             </div>
 
             <div class="container my-2">
                 <label class="form-label">Last name</label>
-                <input name="lastname" value="<?= $data['lastname'] ?? null ?>" required type="text" class="form-control form-control-sm input" disabled>
+                <input name="lastname" value="<?= @$data['lastname'] ?>" required type="text" class="form-control form-control-sm input" disabled>
             </div>
         </div>
 
         <div class="container my-2">
             <label class="form-label">Email</label>
-            <input name="email" value="<?= $data['email'] ?? null ?>" required type="email" class="form-control form-control-sm input" disabled>
+            <input name="email" value="<?= @$data['email'] ?>" required type="email" class="form-control form-control-sm input" disabled>
         </div>
 
         <div class="container my-2">
             <label class="form-label">Phone</label>
-            <input name="phone" value="<?= $data['phone'] ?? null ?>" required type="number" class="form-control form-control-sm input" disabled>
+            <input name="phone" value="<?= @$data['phone'] ?>" required type="number" class="form-control form-control-sm input" disabled>
         </div>
 
         <div class="container my-2">
             <label class="form-label">Address</label>
-            <input name="address" value="<?= $data['address'] ?? null ?>" required type="text" class="form-control form-control-sm input" disabled>
+            <input name="address" value="<?= @$data['address'] ?>" required type="text" class="form-control form-control-sm input" disabled>
         </div>
 
         <div class="container my-2">
             <label class="form-label">Password</label>
-            <input name="password" value="<?= $data['password'] ?? null ?>" required type="text" class="form-control form-control-sm input" disabled>
+            <input name="password" value="<?= @$data['password'] ?>" required type="text" class="form-control form-control-sm input" disabled>
         </div>
 
         <div class="container mt-4">
@@ -194,7 +176,7 @@ $row = mysqli_fetch_assoc($result);
                     formData.append('profileImage', $('#chooseFile')[0].files[0]);
 
                     $.ajax({
-                        url: 'update_profile.php',
+                        url: "<?= site_url('user/update_profile') ?>",
                         type: 'POST',
                         data: formData,
                         processData: false,

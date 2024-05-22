@@ -117,8 +117,8 @@
                             <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" width="100%">
                             <li class="nav-item my-1">
                                 <a href="<?= site_url('admin') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">Dashboard</span>
-                                    Dashboard
+                                    <span class="material-symbols-outlined">Reviews</span>
+                                    Reviews
                                 </a>
                             </li>
                             <li class="nav-item my-1">
@@ -260,8 +260,8 @@
                                             <?php if ($table === 'room_inventory') : ?>
                                                 <th scope="col">Room</th>
                                             <?php endif; ?>
+                                            <th scope="col"><?= $table === 'room_inventory' ? 'Stock In' : 'Available' ?></th>
                                             <th scope="col"><?= $table === 'room_inventory' ? 'Stock Out' : 'Max Item Quantity' ?></th>
-                                            <th scope="col">Available</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -292,8 +292,8 @@
                                                 <?php if ($table === 'room_inventory') : ?>
                                                     <td><?= @$row['room'] ?></td>
                                                 <?php endif; ?>
-                                                <td><?= $table === 'room_inventory' ? @$row['stock_out'] : @$row['max_item_qty'] ?></td>
                                                 <td><?= @$row['available'] ?></td>
+                                                <td><?= $table === 'room_inventory' ? @$row['stock_out'] : @$row['max_item_qty'] ?></td>
                                                 <td>
                                                     <a class="mx-2 text-success">
                                                         <i class="fa-regular fa-eye"></i>
@@ -373,9 +373,10 @@
                                         $stock_out = trim(strval(@$post['stock_out']));
                                         $product_name = trim(strval(@$post['product_name']));
                                         $room = trim(strval(@$post['room']));
+                                        $condition = trim(strval(@$post['condition']));
 
                                         if ($table === 'room_inventory') {
-                                            $insertQuery = "INSERT INTO $table (product_name, product_image, stock_out, available, room) VALUES ('$product_name', '$uploadPath', $stock_out, $available, '$room')";
+                                            $insertQuery = "INSERT INTO $table (product_name, product_image, stock_out, available, room, `condition`) VALUES ('$product_name', '$uploadPath', $stock_out, $available, '$room', '$condition')";
                                         } else {
                                             $insertQuery = "INSERT INTO $table (product, max_item_qty, available, description) VALUES ('$uploadPath', $max_item_qty, $available, '$description')";
                                         }
@@ -414,6 +415,15 @@
                                             <?php foreach ($rooms as $room) : ?>
                                                 <option value="<?= $room['room'] ?>"><?= $room['room'] ?></option>
                                             <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col mt-1">
+                                        <label class="form-label">Condition</label>
+                                        <select required class="form-select form-select-sm input" aria-label="Default select example" id="condition" name="condition">
+                                            <option selected disabled>Select Condition</option>
+                                            <option value="Well Condition">Well Condition</option>
+                                            <option value="Damaged">Damaged</option>
                                         </select>
                                     </div>
 
@@ -468,12 +478,13 @@
 
                                 $post = $this->inventory->validate_post_data($_POST);
 
-                                $max_item_qty = trim(strval(@$post['max_item_qty']));
-                                $available = trim(strval(@$post['available']));
+                                $max_item_qty = intval(strval(@$post['max_item_qty']));
+                                $available = intval(strval(@$post['available']));
                                 $description = trim(strval(@$post['description']));
-                                $stock_out = trim(strval(@$post['stock_out']));
+                                $stock_out = intval(strval(@$post['stock_out']));
                                 $product_name = trim(strval(@$post['product_name']));
                                 $room = trim(strval(@$post['room']));
+                                $condition = trim(strval(@$post['condition']));
 
                                 $uploadPath = '';
 
@@ -502,13 +513,14 @@
                                             $updateQuery .= " product_image = '$uploadPath',";
                                         }
 
-                                        $updateQuery .= " stock_out = $stock_out, available = $available, product_name = '$product_name', room = 'room' WHERE id = $id";
+                                        $updateQuery .= " stock_out = $stock_out, available = $available, product_name = '$product_name', room = '$room', `condition` = '$condition' WHERE id = $id";
                                     } else {
                                         if (!empty($uploadPath)) {
                                             $updateQuery .= " product = '$uploadPath',";
                                         }
                                         $updateQuery .= " max_item_qty = $max_item_qty, available = $available, description = '$description' WHERE id = $id";
                                     }
+
                                     $result = mysqli_query($conn, $updateQuery);
                                     if ($result) {
                                         $success_msg = "Product updated successfully!";
@@ -543,6 +555,15 @@
                                             <?php foreach ($rooms as $room) : ?>
                                                 <option value="<?= $room['room'] ?>" <?= $room['room'] == $row['room'] ? 'selected' : '' ?>><?= $room['room'] ?></option>
                                             <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col mt-1">
+                                        <label class="form-label">Condition</label>
+                                        <select required class="form-select form-select-sm input" aria-label="Default select example" id="condition" name="condition">
+                                            <option disabled>Select Condition</option>
+                                            <option value="Well Condition" <?= $row['condition'] == 'Well Condition' ? 'selected' : '' ?>>Well Condition</option>
+                                            <option value="Damaged" <?= $row['condition'] == 'Damaged' ? 'selected' : '' ?>>Damaged</option>
                                         </select>
                                     </div>
 

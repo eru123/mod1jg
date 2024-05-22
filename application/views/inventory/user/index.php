@@ -1,20 +1,3 @@
-<?php
-require_once '../config.php';
-require_once '../global.php';
-
-if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'admin') {
-        header('location: ../admin');
-    }
-} else {
-    header('location: ../index.php');
-}
-
-$row = getRows("email = '{$_SESSION['email']}'", "accounts")[0];
-$profile = $row['profile'] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
-$email = $row['email'] ?? null;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +6,7 @@ $email = $row['email'] ?? null;
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../src/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?= base_url('inventory-php/src/bootstrap.min.css') ?>" />
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -36,8 +19,8 @@ $email = $row['email'] ?? null;
     <!-- google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-    <script src="../src/jquery.min.js"></script>
-    <script src="../src/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('inventory-php/src/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('inventory-php/src/sweetalert2/sweetalert2.all.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
 
@@ -62,7 +45,7 @@ $email = $row['email'] ?? null;
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark px-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../assets/img/logo.jpg" alt="logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" alt="logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -116,13 +99,13 @@ $email = $row['email'] ?? null;
                     </span>
 
                     <div class="d-flex mt-2 gap-3">
-                        <a href="profile.php" style="border-radius: 15px; font-size: 12px;" class="btn text-primary border border-primary px-5">VIEW</a>
-                        <a href="profile.php" class="btn btn-primary" style="border-radius: 15px; font-size: 12px;">EDIT ACCOUNT</a>
+                        <a href="<?= site_url('user/profile') ?>" style="border-radius: 15px; font-size: 12px;" class="btn text-primary border border-primary px-5">VIEW</a>
+                        <a href="<?= site_url('user/profile') ?>" class="btn btn-primary" style="border-radius: 15px; font-size: 12px;">EDIT ACCOUNT</a>
                     </div>
                 </div>
             </div>
             <div class="col text-white p-4" style="background-color: rgba(0,0,100, 0.7); margin-right: 10px; position: relative;">
-                <img src="../assets/img/img_1.png" style="width: 20%; position: absolute; right: 0; top: 10;">
+                <img src="<?= base_url('inventory-php/assets/img/img_1.png') ?>" style="width: 20%; position: absolute; right: 0; top: 10;">
                 <h4 class="fw-bold">WANT TO BOOK AGAIN?</h4>
                 <div class="p-1 bg-light text-dark col-lg-10 col-12">
                     Check booking availability
@@ -200,7 +183,7 @@ $email = $row['email'] ?? null;
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                            <div>
+                                <div>
                                     <label for="">Review for:</label>
                                     <textarea required class="form-control" rows="2" name="review_for" id="">FAMILY KUBO</textarea>
                                 </div>
@@ -219,7 +202,7 @@ $email = $row['email'] ?? null;
 
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $post = validate_post_data($_POST);
+                    $post = $this->inventory->validate_post_data($_POST);
                     $review = $post['review'];
                     $review_for = $post['review_for'];
 
@@ -236,7 +219,7 @@ $email = $row['email'] ?? null;
         </div>
     </div>
     <?php
-        require_once '../admin/logout_confirmation.php';
+    require_once __DIR__ . '/../admin/logout_confirmation.php';
     ?>
 </body>
 

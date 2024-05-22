@@ -117,8 +117,8 @@
                             <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" width="100%">
                             <li class="nav-item my-1">
                                 <a href="<?= site_url('admin') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">Dashboard</span>
-                                    Dashboard
+                                    <span class="material-symbols-outlined">Reviews</span>
+                                    Reviews
                                 </a>
                             </li>
                             <li class="nav-item my-1 current-page">
