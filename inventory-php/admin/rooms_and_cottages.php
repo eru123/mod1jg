@@ -566,7 +566,7 @@ $email = $row['email'] ?? null;
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "delete_data.php",
+                        url: "<?= site_url("admin/delete_data") ?>",
                         data: {
                             id,
                             table

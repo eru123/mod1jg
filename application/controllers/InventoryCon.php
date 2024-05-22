@@ -482,6 +482,48 @@ class InventoryCon extends CI_Controller
         $this->load->view('inventory/admin/rooms_and_cottages', compact('email'));
     }
 
+    public function delete_data()
+    {
+        $conn = $this->inventory->conn();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = mysqli_real_escape_string($conn, $_POST['id']);
+            $table = mysqli_real_escape_string($conn, $_POST['table']);
+
+            $checkDataExistence = "SELECT * FROM $table WHERE id = '$id'";
+            $resultCheckData = mysqli_query($conn, $checkDataExistence);
+
+            if (mysqli_num_rows($resultCheckData) > 0) {
+                if ($table == 'customer_ticket') {
+                    // get document
+                    $document = getRows("id='$id'", $table)[0]['document'];
+                    unlink(FCPATH . 'user/' . $document);
+                }
+                $sql = "DELETE FROM $table WHERE id = '$id'";
+                if (mysqli_query($conn, $sql)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Data removed successfully'
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => mysqli_error($conn)
+                    ];
+                }
+            } else {
+                // Data does not exist
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Data with the specified ID does not exist'
+                ];
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
+    }
+
     public function profile()
     {
         if (isset($_SESSION['role'])) {
@@ -522,5 +564,50 @@ class InventoryCon extends CI_Controller
                 echo 'Error during file upload. Error code: ' . $file['error'];
             }
         }
+    }
+
+    public function inventory()
+    {
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'user') {
+                // header('location: ../user');
+                redirect('user');
+            }
+        } else {
+            redirect('login');
+        }
+
+        $conn = $this->inventory->conn();
+        $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        // $profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
+        $email = $row['email'] ?? null;
+
+        $rooms = $this->inventory->getRows(" 1", 'rooms');
+        $rooms_and_venues = $this->inventory->getRows(" 1", 'rooms_and_venues');
+        $table = ($_GET['val'] ?? null) == 'Restaurant inventory' ? 'restaurant_inventory' : 'room_inventory';
+        $this->load->view('inventory/admin/inventory', compact('email', 'conn', 'rooms', 'rooms_and_venues', 'table'));
+    }
+
+    public function house_keeping()
+    {
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'user') {
+                // header('location: ../user');
+                redirect('user');
+            }
+        } else {
+            redirect('login');
+        }
+
+        $conn = $this->inventory->conn();
+        $sql = "SELECT * FROM accounts WHERE email = '{$_SESSION['email']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        // $profile = !empty($row['profile']) ? $row['profile'] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png';
+        $email = $row['email'] ?? null;
+
+        $this->load->view('inventory/admin/house_keeping', compact('email', 'conn'));
     }
 }

@@ -142,10 +142,10 @@
                                 </a>
                             </li>
                             <li class="nav-item my-1">
-                                <a href="#" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                <a href="<?= site_url('admin/house_keeping') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">in_home_mode</span>
                                     Housekeeping
-                                </a>
+                                </a> 
                             </li>
                             <li class="nav-item my-1">
                                 <a href="#" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -544,7 +544,6 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        // url: "delete_data.php",
                         url: "<?= site_url("admin/delete_data") ?>",
                         data: {
                             id,

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>House keeping</title>
     <link rel="stylesheet" href="<?= base_url('inventory-php/src/bootstrap.min.css') ?>" />
 
 
@@ -106,8 +106,8 @@
                     <div class="collapse navbar-collapse " id="navbarSupportedContent">
 
                         <ul class="navbar-nav flex-column justify-content-start">
-                            <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>"width="100%">
-                            <li class="nav-item my-1 current-page">
+                            <img src="<?= base_url('inventory-php/assets/img/logo.jpg') ?>" width="100%">
+                            <li class="nav-item my-1">
                                 <a href="<?= site_url('admin') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">Dashboard</span>
                                     Dashboard
@@ -133,11 +133,11 @@
                                     Inventory
                                 </a>
                             </li>
-                            <li class="nav-item my-1">
+                            <li class="nav-item my-1 current-page">
                                 <a href="<?= site_url('admin/house_keeping') ?>" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">in_home_mode</span>
                                     Housekeeping
-                                </a> 
+                                </a>
                             </li>
                             <li class="nav-item my-1">
                                 <a href="#" class="text-center d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -172,21 +172,43 @@
                 <?php require_once __DIR__ . '/profile_nav.php' ?>
 
                 <div class="p-5">
-                    <h4 class="fw-bold">Reviews</h4>
                     <?php
-                    $rows = $this->inventory->getRows(null, "reviews");
-                    foreach ($rows as $row) {
-                        // get username
-                        $_ = $this->inventory->getRows("account_no='{$row['account_no']}'", "accounts")[0];
+                    $rooms = $this->inventory->getRows(null, 'rooms');
+                    foreach ($rooms as $row) {
+                        echo '<h3 class="mt-5">' . $row['room'] . '</h3>';
                     ?>
-                        <div class="alert alert-success" role="alert">
-                            <h4 class="alert-heading"><?= $_['firstname'] ?? 'Anonymous' ?> <?= $_['lastname'] ?? '' ?> | <?= $row['review_for'] ?? 'Anonymous' ?></h4>
-                            <p><?= $row['review'] ?? 'No reviews' ?></p>
-                            <hr>
-                            <p class="mb-0">Review was submitted on <?= $row['date'] ?? 'No date' ?></p>
-                        </div>
+                        <table class="table table-striped table-hover table-light">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Product Image</th>
+                                <th scope="col">Product Name</th>
+                                <!-- <th scope="col">Available</th> -->
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            <?php
+                            $inventory = $this->inventory->getRows("room='{$row['room']}'", 'room_inventory');
+                            foreach ($inventory as $inner_row) {
+                                echo '<tr>';
+                                echo '<td>' . $inner_row['id'] . '</td>';
+                                echo '<td><img src="' . $inner_row['product_image'] . '" width="70px"></td>';
+                                echo '<td>' . $inner_row['product_name'] . '</td>';
+                                // echo '<td>'. $inner_row['available']. '</td>';
+                                echo '<td>Well-condition</td>';
+                                echo '<td>
+                                    <select>
+                                        <option selected disabled class="d-none">-- select one --</option>
+                                        <option>Assign housekeeper</option>
+                                        <option>Change status</option>
+                                    </select>
+                                </td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </table>
                     <?php
                     }
+
                     ?>
                 </div>
                 <!-- ============================================================== -->
